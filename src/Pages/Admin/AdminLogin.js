@@ -44,7 +44,7 @@ const AdminLogin = () => {
         onSubmit: (values, { setSubmitting }) => {
 
 
-            axios.post('https://pro-themers-backend.onrender.com/admin/login', { email: values.adminEmail, pass: values.adminPassword })
+            axios.post('https://prothemer-s-backend-1.onrender.com/admin/login', { email: values.adminEmail, pass: values.adminPassword })
                 .then((res) => {
                     // console.log(res);
                     console.log(res.data.token);
