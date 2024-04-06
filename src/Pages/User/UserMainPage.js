@@ -27,8 +27,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import axios from 'axios';
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 
 const UserMainPage = () => {
@@ -47,7 +46,7 @@ const UserMainPage = () => {
 
     let Token = localStorage.getItem('loginToken');
 
-    axios.get('http://localhost:3000/users/read', { headers: { Authorization: Token } })
+    axios.get('https://prothemer-s-backend-1.onrender.com/users/read', { headers: { Authorization: Token } })
       .then((res) => {
         // console.log(res);
         setUserData(res.data.data);
@@ -208,7 +207,7 @@ const UserMainPage = () => {
         >
           <Tooltip title="Profile Settings">
             <Stack direction="row">
-              <Avatar alt={userData?.fname.toUpperCase()} className='bg-secondary' sx={{ width: 34, height: 34 }} src={`http://localhost:3000/images/${userData?.profilepic}`}></Avatar>
+              <Avatar alt={userData?.fname.toUpperCase()} className='bg-secondary' sx={{ width: 34, height: 34 }} src={`https://prothemer-s-backend-1.onrender.com/images/${userData?.profilepic}`}></Avatar>
               <Button
                 size='small'
                 variant="contained"
@@ -282,7 +281,7 @@ const UserMainPage = () => {
               >
                 <Tooltip title="Profile Settings">
                   <Stack direction="row">
-                    <Avatar alt={userData?.fname.toUpperCase()} className='bg-secondary' sx={{ width: 34, height: 34 }} src={`http://localhost:3000/images/${userData?.profilepic}`}></Avatar>
+                    <Avatar alt={userData?.fname.toUpperCase()} className='bg-secondary' sx={{ width: 34, height: 34 }} src={`https://prothemer-s-backend-1.onrender.com/images/${userData?.profilepic}`}></Avatar>
                     <Button
                       size='small'
                       variant="contained"
@@ -344,18 +343,6 @@ const UserMainPage = () => {
         {renderProfileMenu}
 
       </Box>
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
     </>
   )
 }

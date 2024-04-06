@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { Box, Typography, styled, Paper, Grid, TextField, Button, Container, CssBaseline, useMediaQuery, Toolbar, Card, CardActionArea, CardContent, CardMedia, Stack } from '@mui/material';
+import { Box, Typography, Grid, Container, CssBaseline, useMediaQuery, Toolbar, Card, CardActionArea, CardContent, CardMedia} from '@mui/material';
 import { useState } from 'react';
 import { useTheme } from '@emotion/react';
 
-import { GiRank1 } from "react-icons/gi";
 
 // images 
 import heroImg from '../Images/hero-img.png';
@@ -25,15 +24,6 @@ import 'aos/dist/aos.css';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
-
 const LandingPage = () => {
 
   const theme = useTheme();
@@ -42,7 +32,7 @@ const LandingPage = () => {
 
   // breakPoints  
   const isSm = useMediaQuery(theme.breakpoints.up('sm'));
-  const isMd = useMediaQuery(theme.breakpoints.up('md'));
+  // const isMd = useMediaQuery(theme.breakpoints.up('md'));
   const isLg = useMediaQuery(theme.breakpoints.up('lg'));
 
 
@@ -53,7 +43,7 @@ const LandingPage = () => {
   const getCategoryData = () => {
 
 
-    axios.get('http://localhost:3000/admin/category/read')
+    axios.get('https://prothemer-s-backend-1.onrender.com/admin/category/read')
       .then((res) => {
         // console.log(res);
         setCategoryData(res.data.data);
@@ -134,14 +124,14 @@ const LandingPage = () => {
                           sx={{ position: 'absolute', top: '-44px', width: '80%', borderRadius: '7px' }}
                           component="img"
                           height="180"
-                          image={`http://localhost:3000/images/${categoryData.image}`}
+                          image={`https://prothemer-s-backend-1.onrender.com/images/${categoryData.image}`}
                           alt={categoryData.image}
                         />
                         <CardContent sx={{ marginTop: '113px' }}>
-                          <Typography gutterBottom variant="h5" textAlign='center' fontWeight='bold' >
+                          <Typography  variant="h5" textAlign='center' fontWeight='bold' marginBottom='10px' >
                             {categoryData.category}
                           </Typography>
-                          <Typography variant="body1" textAlign='justify' color="text.secondary">
+                          <Typography variant="body1" textAlign='justify' color="text.secondary" sx={{display : '-webkit-box',WebkitLineClamp : 4,WebkitBoxOrient : 'vertical',overflow : 'hidden'}}>
                             {categoryData.description}
                           </Typography>
                         </CardContent>

@@ -56,7 +56,7 @@ const Category = () => {
 
   const getCategoryData = () => {
 
-    axios.get('http://localhost:3000/admin/category/read')
+    axios.get('https://prothemer-s-backend-1.onrender.com/admin/category/read')
       .then((res) => {
         // console.log(res);
         setCategoryData(res.data.data);
@@ -77,7 +77,7 @@ const Category = () => {
 
     // console.log('categoryId',categoryId);
 
-    axios.get(`http://localhost:3000/landingpage/category/allread/${categoryId}`)
+    axios.get(`https://prothemer-s-backend-1.onrender.com/landingpage/category/allread/${categoryId}`)
       .then((res) => {
         // console.log(res);
         setCategoryProjectData(res.data.data.filter((project) => project?.status === 'Approved'))
@@ -112,7 +112,7 @@ const Category = () => {
     setProjectData(categoryProjectData.slice(0, 6));
 
     if (searchTerm) {
-      setProjectData(categoryProjectData.filter((project) => project?.projectName.includes(searchTerm)).slice(0, 6));
+      setProjectData(categoryProjectData.filter((project) => project?.projectName.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 6));
     }
 
     if (viewAll) {
@@ -212,13 +212,13 @@ const Category = () => {
                       <CardMedia sx={{ borderBottom: '1px solid #e3e3e3', height: '200px' }}>
                         <Slider {...settings} className='User-Project-slider'>
                           <div className='img-container' >
-                            <img src={`http://localhost:3000/images/${projectData?.screenshorts[0]}`} width='100%' height='100%' alt='img-1' />
+                            <img src={`https://prothemer-s-backend-1.onrender.com/images/${projectData?.screenshorts[0]}`} width='100%' height='100%' alt='img-1' />
                           </div>
                           <div className='img-container'>
-                            <img src={`http://localhost:3000/images/${projectData?.screenshorts[1]}`} width='100%' height='100%' alt='img-2' />
+                            <img src={`https://prothemer-s-backend-1.onrender.com/images/${projectData?.screenshorts[1]}`} width='100%' height='100%' alt='img-2' />
                           </div>
                           <div className='img-container'>
-                            <img src={`http://localhost:3000/images/${projectData?.screenshorts[2]}`} width='100%' height='100%' alt='img-3' />
+                            <img src={`https://prothemer-s-backend-1.onrender.com/images/${projectData?.screenshorts[2]}`} width='100%' height='100%' alt='img-3' />
                           </div>
                         </Slider>
                       </CardMedia>

@@ -6,10 +6,11 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { LiaThemeco } from "react-icons/lia";
 import { FaPhone } from "react-icons/fa6";
 import { MdOutlineEmail } from "react-icons/md";
+import { AiOutlineCopyright } from "react-icons/ai";
 
 
 const Footer = () => {
-    
+
     const theme = useTheme();
     let history = useHistory();
 
@@ -45,9 +46,9 @@ const Footer = () => {
                                 Themer's is a Website Template platform where you can see everything you need to create a website. Hundreds of independent developers upload their products here so that you could create your own unique project.
                             </Typography>
 
-                        </Grid> 
+                        </Grid>
                         <Grid item md={4} xs={12}>
-                            <Box sx={{paddingX : isMd ? '60px' : '0px'}}>
+                            <Box sx={{ paddingX: isMd ? '60px' : '0px' }}>
                                 <Typography variant='h5' className='primary-color' marginTop='10px' marginBottom='10px'>
                                     Product
                                 </Typography>
@@ -78,6 +79,14 @@ const Footer = () => {
                             </Stack>
                         </Grid>
                     </Grid>
+                </Box>
+                <Box sx={{ borderTop: '1px solid rgba(255,255,255,0.7)', padding: '20px',color : '#fff'}}>
+                    <Stack direction='row' alignItems='center' justifyContent='center'>
+                        <AiOutlineCopyright size={14} />  
+                        <Typography variant='body2' sx={{paddingLeft : '5px'}}>
+                         2024 Themer's Pvt Ltd. All Rights Reserved by Themer's.
+                        </Typography>
+                    </Stack>
                 </Box>
             </Container>
         </Box>

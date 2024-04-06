@@ -91,9 +91,9 @@ const Header = ({ loadData }) => {
 
   const [value, setValue] = React.useState();
 
-   useEffect(() => {
+  useEffect(() => {
     setValue(Number(sessionStorage.getItem('value')));
-   },[])
+  }, [])
 
 
   //  console.log('value',value);
@@ -118,7 +118,7 @@ const Header = ({ loadData }) => {
 
   const getCategoryData = () => {
 
-    axios.get('http://localhost:3000/admin/category/read')
+    axios.get('https://prothemer-s-backend-1.onrender.com/admin/category/read')
       .then((res) => {
         // console.log(res);
         setCategoryData(res.data.data);
@@ -134,7 +134,7 @@ const Header = ({ loadData }) => {
 
     let Token = localStorage.getItem('loginToken');
 
-    axios.get('http://localhost:3000/users/read', { headers: { Authorization: Token } })
+    axios.get('https://prothemer-s-backend-1.onrender.com/users/read', { headers: { Authorization: Token } })
       .then((res) => {
         // console.log(res);
         setUserData(res.data.data);
@@ -152,6 +152,25 @@ const Header = ({ loadData }) => {
   }, [])
 
   console.log('categoryData====', categoryData);
+
+
+  const [OTP, setOTP] = useState();
+
+  console.log('otp', OTP);
+
+  const getOTP = (email) => {
+
+
+    axios.post('https://prothemer-s-backend-1.onrender.com/users/login/check', { email: email })
+      .then((res) => {
+        // console.log(res);
+        setOTP(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+
+  }
 
 
   const [showPassword, setShowPassword] = useState(
@@ -195,7 +214,7 @@ const Header = ({ loadData }) => {
 
       let token = localStorage.getItem('token');
 
-      axios.post('http://localhost:3000/users/login', { email: values.email, pass: values.password }, { headers: { Authorization: token } })
+      axios.post('https://prothemer-s-backend-1.onrender.com/users/login', { email: values.email, pass: values.password }, { headers: { Authorization: token } })
         .then((res) => {
           console.log(res);
           localStorage.setItem('loginToken', res.data.token)
@@ -266,7 +285,7 @@ const Header = ({ loadData }) => {
       formData.append("profilepic", values.userImg);
 
 
-      axios.post('http://localhost:3000/users/signup', formData, {
+      axios.post('https://prothemer-s-backend-1.onrender.com/users/signup', formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         }
@@ -298,9 +317,11 @@ const Header = ({ loadData }) => {
   console.log('signupData========', signupData);
 
 
+
+
   // forget-password
 
-  const [forgetPasswordData, setForgetPasswordData] = useState([]);
+  // const [forgetPasswordData, setForgetPasswordData] = useState([]);
 
   const ForgetPasswordSchema = Yup.object().shape({
     forgetPasswordEmail: Yup.string().email('Invalid email').required('Required'),
@@ -320,10 +341,11 @@ const Header = ({ loadData }) => {
 
       if (values.forgetpasswordPassword === values.forgetpasswordConfirmPassword) {
 
-        axios.patch('http://localhost:3000/users/login/forget-pass', { email: values.forgetPasswordEmail, pass: values.forgetpasswordPassword, confirmpass: values.forgetpasswordConfirmPassword })
+        axios.patch('https://prothemer-s-backend-1.onrender.com/users/login/forget-pass', { email: values.forgetPasswordEmail, pass: values.forgetpasswordPassword, confirmpass: values.forgetpasswordConfirmPassword })
           .then((res) => {
             console.log(res);
             setSubmitting(values.forgetPasswordEmail = '', values.forgetpasswordPassword = '', values.forgetpasswordConfirmPassword = '');
+            handleForgetPasswordModalClose();
             toast(res.data.message);
           })
           .catch((err) => {
@@ -345,7 +367,7 @@ const Header = ({ loadData }) => {
   })
 
 
-  console.log('forgetPasswordData========', forgetPasswordData);
+  // console.log('forgetPasswordData========', forgetPasswordData);
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -455,6 +477,189 @@ const Header = ({ loadData }) => {
   const [openForgetPasswordModal, setOpenForgetPasswordModal] = useState(false);
   const handleForgetPasswordModalOpen = () => setOpenForgetPasswordModal(true);
   const handleForgetPasswordModalClose = () => { setOpenForgetPasswordModal(false); formikForgetPassword.resetForm(); };
+
+  // emailVerify
+  const [openEmailVerifyModal, setOpenEmailVerifyModal] = useState(false);
+  const handleEmailVerifyModalOpen = () => setOpenEmailVerifyModal(true);
+  const handleEmailVerifyModalClose = () => { setOpenEmailVerifyModal(false); formikEmailVerify.resetForm(); };
+
+
+  //  emailVerifySchema 
+  const EmailVerifySchema = Yup.object().shape({
+    verifyEmail: Yup.string().email('Invalid email').required('Required')
+  });
+
+  const formikEmailVerify = useFormik({
+    initialValues: {
+      verifyEmail: '',
+    },
+    validationSchema: EmailVerifySchema,
+    onSubmit: (values, { setSubmitting }) => {
+      // console.log('values',values)
+
+
+      axios.patch('https://prothemer-s-backend-1.onrender.com/users/login/verify', { email: values.verifyEmail })
+        .then((res) => {
+          console.log(res);
+          getOTP(values.verifyEmail);
+          setSubmitting(values.verifyEmail = '');
+
+          handleEmailVerifyModalClose();
+
+          handleOTPVerifyModalOpen();
+
+        })
+        .catch((err) => {
+          // console.log(err);
+          toast(err.response.data.message);
+        })
+
+    }
+  })
+
+  // console.log('formikEmailVerify',formikEmailVerify);
+
+
+  const ModalEmailVerify = (
+    <Modal
+      aria-labelledby="transition-modal-title"
+      aria-describedby="transition-modal-description"
+      open={openEmailVerifyModal}
+      onClose={handleEmailVerifyModalClose}
+      closeAfterTransition
+      slots={{ backdrop: Backdrop }}
+      slotProps={{
+        backdrop: {
+          timeout: 500,
+        },
+      }}
+    >
+      <Fade in={openEmailVerifyModal}>
+        <Box sx={style} width={isSm ? 400 : 290}  >
+          <Stack direction='row' justifyContent='flex-end' alignItems='center' position='relative' height='0px'>
+            <IconButton aria-label="delete" onClick={handleEmailVerifyModalClose} position='absolute' sx={{ top: '0px', right: '-15px' }}>
+              <IoCloseCircleOutline />
+            </IconButton>
+          </Stack>
+          <Typography variant="h5" id="transition-modal-title" className='fw-600' marginBottom='25px'>
+            Verify Email
+          </Typography>
+          <Box sx={{ mt: 2 }} component='div'>
+            <form onSubmit={formikEmailVerify.handleSubmit}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Typography variant="subtitle2" display="block" gutterBottom>
+                    Note : Verify your email id. We will send you OTP in your email id.
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField fullWidth
+                    id="verifyEmail"
+                    name='verifyEmail'
+                    onChange={formikEmailVerify.handleChange}
+                    onBlur={formikEmailVerify.handleBlur}
+                    value={formikEmailVerify.values.verifyEmail}
+                    error={formikEmailVerify.touched.verifyEmail && Boolean(formikEmailVerify.errors.verifyEmail)}
+                    helperText={formikEmailVerify.touched.verifyEmail && formikEmailVerify.errors.verifyEmail}
+                    label="Email Address" />
+                </Grid>
+                <Grid item xs={12} textAlign='center'>
+                  <Button type='submit' variant="contained" sx={{ display: 'block', width: '100%', marginTop: '15px' }} >verify email</Button>
+                </Grid>
+              </Grid>
+            </form>
+          </Box>
+        </Box>
+      </Fade>
+    </Modal>
+
+  )
+
+  // otpVerify
+  const [openOTPVerifyModal, setOpenOTPVerifyModal] = useState(false);
+  const handleOTPVerifyModalOpen = () => setOpenOTPVerifyModal(true);
+  const handleOTPVerifyModalClose = () => { setOpenOTPVerifyModal(false); formikOTPVerify.resetForm(); };
+
+  //  otpVerifySchema 
+  const OTPVerifySchema = Yup.object().shape({
+    verifyOTP: Yup.string().required('Required')
+  });
+
+  const formikOTPVerify = useFormik({
+    initialValues: {
+      verifyOTP: '',
+    },
+    validationSchema: OTPVerifySchema,
+    onSubmit: (values, { setSubmitting }) => {
+      // console.log('values', values);
+
+      if (OTP === values.verifyOTP) {
+        setSubmitting(values.verifyOTP = '');
+        handleOTPVerifyModalClose();
+        handleForgetPasswordModalOpen();
+      }
+      else {
+        toast('Invalid OTP');
+      }
+
+
+    }
+  })
+
+  const ModalOTPVerify = (
+    <Modal
+      aria-labelledby="transition-modal-title"
+      aria-describedby="transition-modal-description"
+      open={openOTPVerifyModal}
+      onClose={handleOTPVerifyModalClose}
+      closeAfterTransition
+      slots={{ backdrop: Backdrop }}
+      slotProps={{
+        backdrop: {
+          timeout: 500,
+        },
+      }}
+    >
+      <Fade in={openOTPVerifyModal}>
+        <Box sx={style} width={isSm ? 400 : 290}  >
+          <Stack direction='row' justifyContent='flex-end' alignItems='center' position='relative' height='0px'>
+            <IconButton aria-label="delete" onClick={handleOTPVerifyModalClose} position='absolute' sx={{ top: '0px', right: '-15px' }}>
+              <IoCloseCircleOutline />
+            </IconButton>
+          </Stack>
+          <Typography variant="h5" id="transition-modal-title" className='fw-600' marginBottom='25px'>
+            Verify OTP
+          </Typography>
+          <Box sx={{ mt: 2 }} component='div'>
+            <form onSubmit={formikOTPVerify.handleSubmit}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Typography variant="subtitle2" display="block" gutterBottom>
+                    Note : Verify Your OTP. We have send you an OTP on your email id.
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField fullWidth
+                    id="verifyOTP"
+                    name='verifyOTP'
+                    onChange={formikOTPVerify.handleChange}
+                    onBlur={formikOTPVerify.handleBlur}
+                    value={formikOTPVerify.values.verifyOTP}
+                    error={formikOTPVerify.touched.verifyOTP && Boolean(formikOTPVerify.errors.verifyOTP)}
+                    helperText={formikOTPVerify.touched.verifyOTP && formikOTPVerify.errors.verifyOTP}
+                    label="Enter OTP" />
+                </Grid>
+                <Grid item xs={12} textAlign='center'>
+                  <Button type='submit' variant="contained" sx={{ display: 'block', width: '100%', marginTop: '15px' }} >verify OTP</Button>
+                </Grid>
+              </Grid>
+            </form>
+          </Box>
+        </Box>
+      </Fade>
+    </Modal>
+
+  )
 
 
   const ModalForgetPassword = (
@@ -645,7 +850,7 @@ const Header = ({ loadData }) => {
                 <Grid item xs={12} textAlign='end'  >
                   <Stack spacing={1} marginTop='5px'>
                     <div>
-                      <Typography variant="body2" color='#4154f1' sx={{ textDecoration: 'none!important', display: 'inline-block', cursor: 'pointer' }} onClick={() => { formikSignIn.resetForm(); handleForgetPasswordModalOpen(); }}>
+                      <Typography variant="body2" color='#4154f1' sx={{ textDecoration: 'none!important', display: 'inline-block', cursor: 'pointer' }} onClick={() => { formikSignIn.resetForm(); handleLoginModalClose(); handleEmailVerifyModalOpen(); }}>
                         Forgot password?
                       </Typography>
                     </div>
@@ -887,7 +1092,7 @@ const Header = ({ loadData }) => {
             >
               <Tooltip title="Profile Settings">
                 <Stack direction="row">
-                  <Avatar alt={userData?.fname.toUpperCase()} className='bg-secondary' sx={{ width: 34, height: 34 }} src={`http://localhost:3000/images/${userData?.profilepic}`} ></Avatar>
+                  <Avatar alt={userData?.fname.toUpperCase()} className='bg-secondary' sx={{ width: 34, height: 34 }} src={`https://prothemer-s-backend-1.onrender.com/images/${userData?.profilepic}`} ></Avatar>
                   <Button
                     size='small'
                     variant="contained"
@@ -917,7 +1122,7 @@ const Header = ({ loadData }) => {
       <Box sx={{ flexGrow: 1, position: "sticky", top: 0 }} zIndex={1030} >
         <Box sx={{ flexGrow: 1 }} className='header bg-default'>
           <Container maxWidth='lg'>
-            <AppBar position="static" className='bg-default' sx={{boxShadow: '0px 0px' }} >
+            <AppBar position="static" className='bg-default' sx={{ boxShadow: '0px 0px' }} >
               <Toolbar >
                 <Stack spacing={1} direction="row" alignItems="center" >
                   <LiaThemeco size={32} className='primary-color' />
@@ -965,14 +1170,14 @@ const Header = ({ loadData }) => {
                         >
                           <Stack direction="row">
                             {/* <Avatar className='bg-secondary' sx={{ width: 35, height: 35 }} >{userData?.fname.charAt(0).toUpperCase()}</Avatar> */}
-                            <Avatar alt={userData?.fname.toUpperCase()} sx={{ width: 34, height: 34 }} className='bg-secondary' src={`http://localhost:3000/images/${userData?.profilepic}`} ></Avatar>
+                            <Avatar alt={userData?.fname.toUpperCase()} sx={{ width: 34, height: 34 }} className='bg-secondary' src={`https://prothemer-s-backend-1.onrender.com/images/${userData?.profilepic}`} ></Avatar>
                             <Button
                               size='small'
                               variant="contained"
                               disableElevation
                               endIcon={<KeyboardArrowDownIcon />}
                               disableRipple
-                              sx={{ textTransform: 'capitalize', fontSize: "15px", paddingRight: "0px"}}
+                              sx={{ textTransform: 'capitalize', fontSize: "15px", paddingRight: "0px" }}
                               className='profileBTN'
                             >
                               {userData?.fname.charAt(0) + '.' + userData?.lname}
@@ -1006,6 +1211,8 @@ const Header = ({ loadData }) => {
           {userMenu}
           {ModalLogin}
           {ModalRegister}
+          {ModalEmailVerify}
+          {ModalOTPVerify}
           {ModalForgetPassword}
         </Box>
         <Box sx={{ color: '#fff' }} className='bg-secondary'>
@@ -1019,13 +1226,12 @@ const Header = ({ loadData }) => {
             id='header-tabs'
           >
 
-            {categoryData.map((categoryData,index) => (
+            {categoryData.map((categoryData, index) => (
               <Tab label={categoryData.category} sx={{ color: 'rgba(255,255,255,0.6)' }} onClick={() => {
                 setValue(index)
-                sessionStorage.setItem('value',index)
-                sessionStorage.setItem('categoryId', categoryData._id); 
-                if(loadData)
-                {
+                sessionStorage.setItem('value', index)
+                sessionStorage.setItem('categoryId', categoryData._id);
+                if (loadData) {
                   loadData();
                 }
                 history.push("/category");
