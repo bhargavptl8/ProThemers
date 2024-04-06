@@ -79,7 +79,7 @@ const UserProjects = () => {
     const getCategoryData = () => {
         let Token = localStorage.getItem('token');
 
-        axios.get('https://prothemer-s-backend-1.onrender.com/admin/category/read', { headers: { Authorization: Token } })
+        axios.get('https://pro-themers-backend.onrender.com/admin/category/read', { headers: { Authorization: Token } })
             .then((res) => {
                 // console.log(res);
                 setCategoryData(res.data.data);
@@ -97,7 +97,7 @@ const UserProjects = () => {
 
         let Token = localStorage.getItem('loginToken');
 
-        axios.get('https://prothemer-s-backend-1.onrender.com/users/project/userread',
+        axios.get('https://pro-themers-backend.onrender.com/users/project/userread',
             {
                 headers: {
                     Authorization: Token
@@ -243,7 +243,7 @@ const UserProjects = () => {
 
                 let Token = localStorage.getItem('loginToken')
 
-                axios.patch(`https://prothemer-s-backend-1.onrender.com/users/project/update/${id}`, formData, { headers: { Authorization: Token } })
+                axios.patch(`https://pro-themers-backend.onrender.com/users/project/update/${id}`, formData, { headers: { Authorization: Token } })
                     .then((res) => {
                         console.log(res);
                         setId('');
@@ -286,7 +286,7 @@ const UserProjects = () => {
 
                 let Token = localStorage.getItem('loginToken');
 
-                axios.post('https://prothemer-s-backend-1.onrender.com/users/project/create', formData, {
+                axios.post('https://pro-themers-backend.onrender.com/users/project/create', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         Authorization: Token
@@ -713,13 +713,13 @@ const UserProjects = () => {
                                         <CardMedia sx={{ borderBottom: '1px solid #e3e3e3', height: '200px' }}>
                                             <Slider {...settings} className='User-Project-slider'>
                                                 <div className='img-container'>
-                                                    <img src={`https://prothemer-s-backend-1.onrender.com/images/${projectData.screenshorts[0]}`} width='100%' height='100%' alt='img-1' />
+                                                    <img src={`https://pro-themers-backend.onrender.com/images/${projectData.screenshorts[0]}`} width='100%' height='100%' alt='img-1' />
                                                 </div>
                                                 <div >
-                                                    <img src={`https://prothemer-s-backend-1.onrender.com/images/${projectData.screenshorts[1]}`} width='100%' height='100%' alt='img-2' />
+                                                    <img src={`https://pro-themers-backend.onrender.com/images/${projectData.screenshorts[1]}`} width='100%' height='100%' alt='img-2' />
                                                 </div>
                                                 <div >
-                                                    <img src={`https://prothemer-s-backend-1.onrender.com/images/${projectData.screenshorts[2]}`} width='100%' height='100%' alt='img-3' />
+                                                    <img src={`https://pro-themers-backend.onrender.com/images/${projectData.screenshorts[2]}`} width='100%' height='100%' alt='img-3' />
                                                 </div>
                                             </Slider>
                                         </CardMedia>
