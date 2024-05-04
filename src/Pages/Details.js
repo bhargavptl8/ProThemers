@@ -40,7 +40,7 @@ const Details = () => {
 
         let projectId = sessionStorage.getItem('projectId');
 
-        axios.get(`http://localhost:3000/landingpage/project/read/${projectId}`)
+        axios.get(`https://prothemer-s-backend-1.onrender.com/landingpage/project/read/${projectId}`)
             .then((res) => {
                 // console.log(res);
                 setProjectData(res.data.data)
@@ -58,7 +58,7 @@ const Details = () => {
 
     const getCategoryData = () => {
 
-        axios.get('http://localhost:3000/admin/category/read')
+        axios.get('https://prothemer-s-backend-1.onrender.com/admin/category/read')
             .then((res) => {
                 // console.log(res);
                 setCategoryData(res.data.data);
@@ -74,7 +74,7 @@ const Details = () => {
 
         let projectId = sessionStorage.getItem('projectId');
 
-        axios.patch(`http://localhost:3000/landingpage/project-details/update/${projectId}`)
+        axios.patch(`https://prothemer-s-backend-1.onrender.com/landingpage/project-details/update/${projectId}`)
             .then((res) => {
                 console.log(res);
                 getProjectData();
@@ -117,7 +117,7 @@ const Details = () => {
                             <Grid item md={7} xs={12} >
                                 <Item data-aos="fade-up-right" data-aos-duration="1500">
                                     <Box sx={{ height: isSm ? '370px' : 'auto' }}>
-                                        <img src={`http://localhost:3000/images/${projectData[0]?.screenshorts[0]}`} width='100%' height='100%' alt={projectData[0]?.projectName} />
+                                        <img src={`https://prothemer-s-backend-1.onrender.com/images/${projectData[0]?.screenshorts[0]}`} width='100%' height='100%' alt={projectData[0]?.projectName} />
                                     </Box>
                                     <a href={projectData[0]?.projectLink} target='_blank' rel="noreferrer">
                                         <Button variant='contained' size={isSm ? 'medium' : 'small'} className='bg-primary' sx={{ marginTop: '10px', textTransform: 'capitalize' }} startIcon={<IoEyeSharp />}>live preview</Button>
@@ -129,7 +129,7 @@ const Details = () => {
                                     <Box>
                                         <Stack direction='row' spacing={1.5} alignItems='center' marginBottom='20px' justifyContent='center'>
                                             <Tooltip title="Download" arrow>
-                                                <a href={`http://localhost:3000/images/${projectData[0]?.projectZip}`} download='download.zip'>
+                                                <a href={`https://prothemer-s-backend-1.onrender.com/images/${projectData[0]?.projectZip}`} download='download.zip'>
                                                     <Fab size="small" className='bg-primary' sx={{ zIndex: '0' }} aria-label="add" onClick={downloadUpdate}>
                                                         <BsDownload color='#fff' size={18} />
                                                     </Fab>
@@ -209,7 +209,7 @@ const Details = () => {
                         <Grid container spacing={8} alignItems='center'>
                             <Grid item md={6} xs={12} sx={{ order: { md: 1, xs: 2 } }}>
                                 <Box data-aos="flip-left" data-aos-duration="1500">
-                                    <img src={`http://localhost:3000/images/${projectData[0]?.screenshorts[0]}`} width='100%' alt="" />
+                                    <img src={`https://prothemer-s-backend-1.onrender.com/images/${projectData[0]?.screenshorts[0]}`} width='100%' alt="" />
                                 </Box>
                             </Grid>
                             <Grid item md={6} xs={12} sx={{ order: { md: 2, xs: 1 } }}>
@@ -231,12 +231,12 @@ const Details = () => {
                             </Grid>
                             <Grid item md={6} xs={12} sx={{ order: { md: 3, xs: 4 } }}>
                                 <Box data-aos="flip-right" data-aos-duration="1500">
-                                    <img src={`http://localhost:3000/images/${projectData[0]?.screenshorts[1]}`} width='100%' alt="" />
+                                    <img src={`https://prothemer-s-backend-1.onrender.com/images/${projectData[0]?.screenshorts[1]}`} width='100%' alt="" />
                                 </Box>
                             </Grid>
                             <Grid item md={6} xs={12} sx={{ order: { md: 5, xs: 6 } }}>
                                 <Box data-aos="flip-left" data-aos-duration="1500">
-                                    <img src={`http://localhost:3000/images/${projectData[0]?.screenshorts[2]}`} width='100%' alt="" />
+                                    <img src={`https://prothemer-s-backend-1.onrender.com/images/${projectData[0]?.screenshorts[2]}`} width='100%' alt="" />
                                 </Box>
                             </Grid>
                             <Grid item md={6} xs={12} sx={{ order: { md: 6, xs: 5 } }}>

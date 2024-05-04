@@ -52,7 +52,7 @@ const AdminProjects = () => {
   const [categoryData, setCategoryData] = useState([]);
 
   const getCategoryData = () => {
-    axios.get('http://localhost:3000/admin/category/read')
+    axios.get('https://prothemer-s-backend-1.onrender.com/admin/category/read')
       .then((res) => {
         // console.log(res);
         setCategoryData(res.data.data);
@@ -70,7 +70,7 @@ const AdminProjects = () => {
 
     let Token = localStorage.getItem('adminToken');
 
-    axios.get('http://localhost:3000/admin/project/read', { headers: { Authorization: Token } })
+    axios.get('https://prothemer-s-backend-1.onrender.com/admin/project/read', { headers: { Authorization: Token } })
       .then((res) => {
         console.log(res);
         setUserAllProjectData(res.data.data);
@@ -88,7 +88,7 @@ const AdminProjects = () => {
   const getUserData = () => {
 
     let Token = localStorage.getItem('adminToken');
-    axios.get('http://localhost:3000/users/alldata/read', { headers: { Authorization: Token } })
+    axios.get('https://prothemer-s-backend-1.onrender.com/users/alldata/read', { headers: { Authorization: Token } })
       .then((res) => {
         // console.log(res);
         setUserData(res.data.data);
@@ -261,13 +261,13 @@ const AdminProjects = () => {
                 <Box paddingX='40px'>
                   <Slider {...settings}>
                     <div className='imageContainer'>
-                      <img src={`http://localhost:3000/images/${findData?.screenshorts[0]}`} className='sliderImg' alt='img-1' />
+                      <img src={`https://prothemer-s-backend-1.onrender.com/images/${findData?.screenshorts[0]}`} className='sliderImg' alt='img-1' />
                     </div>
                     <div className='imageContainer'>
-                      <img src={`http://localhost:3000/images/${findData?.screenshorts[1]}`} className='sliderImg' alt='img-2' />
+                      <img src={`https://prothemer-s-backend-1.onrender.com/images/${findData?.screenshorts[1]}`} className='sliderImg' alt='img-2' />
                     </div>
                     <div className='imageContainer'>
-                      <img src={`http://localhost:3000/images/${findData?.screenshorts[2]}`} className='sliderImg' alt='img-3' />
+                      <img src={`https://prothemer-s-backend-1.onrender.com/images/${findData?.screenshorts[2]}`} className='sliderImg' alt='img-3' />
                     </div>
                   </Slider>
                 </Box>
@@ -313,7 +313,7 @@ const AdminProjects = () => {
                </Grid> */}
 
               <Grid item xs={12} textAlign='center' marginBottom={isSm ? '0px' : '16px'}>
-                <a href={'http://localhost:3000/images/' + findData?.projectZip}
+                <a href={'https://prothemer-s-backend-1.onrender.com/images/' + findData?.projectZip}
                   download>
                   <Button variant="contained" endIcon={<BsDownload size={16} style={{ marginRight: '4px' }} />} sx={{ textTransform: 'capitalize' }} >
                     download .zip

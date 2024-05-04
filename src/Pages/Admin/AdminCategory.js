@@ -43,7 +43,7 @@ const AdminCategory = () => {
     const getData = () => {
         // let Token = localStorage.getItem('adminToken');
 
-        axios.get('http://localhost:3000/admin/category/read', 
+        axios.get('https://prothemer-s-backend-1.onrender.com/admin/category/read', 
         // { headers: { Authorization: Token } }
         )
             .then((res) => {
@@ -107,7 +107,7 @@ const AdminCategory = () => {
 
                 let Token = localStorage.getItem('adminToken'); 
 
-                axios.patch(`http://localhost:3000/admin/category/update/${categoryDataId}`, formData,{ headers: { Authorization: Token } })
+                axios.patch(`https://prothemer-s-backend-1.onrender.com/admin/category/update/${categoryDataId}`, formData,{ headers: { Authorization: Token } })
                     .then((res) => {
                         console.log(res);
                         setSubmitting(values.categoryName = '', values.categoryPhoto = '', values.categoryDescription = '');
@@ -129,7 +129,7 @@ const AdminCategory = () => {
                 formData.append('description', values.categoryDescription);
                 formData.append("image", values.categoryPhoto);
 
-                axios.post('http://localhost:3000/admin/category/create', formData, {
+                axios.post('https://prothemer-s-backend-1.onrender.com/admin/category/create', formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     }
@@ -156,7 +156,7 @@ const AdminCategory = () => {
 
         let Token = localStorage.getItem('adminToken');
 
-        axios.delete(`http://localhost:3000/admin/category/delete/${categoryId}`,  { headers: { Authorization: Token } })
+        axios.delete(`https://prothemer-s-backend-1.onrender.com/admin/category/delete/${categoryId}`,  { headers: { Authorization: Token } })
             .then((res) => {
                 console.log(res);
                 getData();
@@ -252,7 +252,7 @@ const AdminCategory = () => {
     // ))
 
     const rows = data.map((categoryData, dataId) => (
-        { id: dataId + 1, categoryName: categoryData.category, categoryPhoto: <img src={`http://localhost:3000/images/${categoryData.image}`} width='150px' alt='img'></img>, categoryDescription: categoryData.description, delete: <Button variant='contained' color='error' onClick={() => deleteUserData(categoryData._id)}>delete</Button>, edit: <Button variant='contained' color='warning' onClick={() => editUserData(categoryData._id, dataId)}>edit</Button> }
+        { id: dataId + 1, categoryName: categoryData.category, categoryPhoto: <img src={`https://prothemer-s-backend-1.onrender.com/images/${categoryData.image}`} width='150px' alt='img'></img>, categoryDescription: categoryData.description, delete: <Button variant='contained' color='error' onClick={() => deleteUserData(categoryData._id)}>delete</Button>, edit: <Button variant='contained' color='warning' onClick={() => editUserData(categoryData._id, dataId)}>edit</Button> }
     ))
 
 
