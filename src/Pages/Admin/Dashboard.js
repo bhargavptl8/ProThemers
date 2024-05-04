@@ -80,7 +80,7 @@ const Dashboard = () => {
 
 
   const getCategoryData = () => {
-    axios.get('https://prothemer-s-backend-1.onrender.com/admin/category/read')
+    axios.get('http://localhost:3000/admin/category/read')
       .then((res) => {
         // console.log(res);
         setCategoryData(res.data.data);
@@ -90,14 +90,14 @@ const Dashboard = () => {
       })
   }
 
-  console.log('categoryData',categoryData);
+  console.log('categoryData', categoryData);
 
 
   const getUserAllProjectData = () => {
 
     let Token = localStorage.getItem('adminToken');
 
-    axios.get('https://prothemer-s-backend-1.onrender.com/admin/project/read', { headers: { Authorization: Token } })
+    axios.get('http://localhost:3000/admin/project/read', { headers: { Authorization: Token } })
       .then((res) => {
         console.log(res);
         setUserAllProjectData(res.data.data);
@@ -112,7 +112,7 @@ const Dashboard = () => {
   const getUserData = () => {
 
     let Token = localStorage.getItem('adminToken');
-    axios.get('https://prothemer-s-backend-1.onrender.com/users/alldata/read', { headers: { Authorization: Token } })
+    axios.get('http://localhost:3000/users/alldata/read', { headers: { Authorization: Token } })
       .then((res) => {
         // console.log(res);
         setUserData(res.data.data);
@@ -125,7 +125,7 @@ const Dashboard = () => {
   console.log('userData', userData);
 
 
-  
+
   useEffect(() => {
     getCategoryData();
     getUserAllProjectData();
@@ -141,12 +141,13 @@ const Dashboard = () => {
 
   const statusSchema = Yup.object().shape({
     Status: Yup.string().required('Required'),
-
+    Feedback: Yup.string().required('Required')
   });
 
   const formikStatus = useFormik({
     initialValues: {
       Status: '',
+      Feedback : ''
     },
     validationSchema: statusSchema,
     // enableReinitialize: true,
@@ -154,9 +155,9 @@ const Dashboard = () => {
 
       let Token = localStorage.getItem('adminToken');
 
-      axios.patch(`https://prothemer-s-backend-1.onrender.com/admin/project/update/${findData._id}`, { status: values.Status },{headers: {Authorization : Token}})
+      axios.patch(`http://localhost:3000/admin/project/update/${findData._id}`, { status: values.Status, feedback: values.Feedback}, { headers: { Authorization: Token } })
         .then((res) => {
-          console.log("fsddddddddddddddddddddddddd",res);
+          console.log("Status", res);
           resetForm();
           handleStatusModalClose();
           getUserAllProjectData();
@@ -221,6 +222,24 @@ const Dashboard = () => {
                     error={formikStatus.touched.Status && Boolean(formikStatus.errors.Status)}
                     helperText={formikStatus.touched.Status && formikStatus.errors.Status}
                   />}
+                />
+              </Grid>
+              <Grid item sm={4} xs={12}>
+                <InputLabel className='fw-600'>Feedback</InputLabel>
+              </Grid>
+              <Grid item sm={8} xs={12} marginBottom={isSm ? '0px' : '16px'}>
+                <TextField
+                  id="Feedback"
+                  name='Feedback'
+                  multiline
+                  rows={3}
+                  fullWidth
+                  variant="standard"
+                  onChange={formikStatus.handleChange}
+                  value={formikStatus.values.Feedback}
+                  onBlur={formikStatus.handleBlur}
+                  error={formikStatus.touched.Feedback && Boolean(formikStatus.errors.Feedback)}
+                  helperText={formikStatus.touched.Feedback && formikStatus.errors.Feedback}
                 />
               </Grid>
               <Grid item xs={12} textAlign='center' marginTop='16px' marginBottom={isSm ? '0px' : '16px'}>
@@ -294,7 +313,7 @@ const Dashboard = () => {
               </Grid>
               <Grid item sm={8} xs={12} marginBottom={isSm ? '0px' : '16px'}>
                 <TextField
-                    defaultValue={categoryData.find((el) => el._id === findData?.category)?.category}
+                  defaultValue={categoryData.find((el) => el._id === findData?.category)?.category}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -336,13 +355,13 @@ const Dashboard = () => {
                 <Box paddingX='40px'>
                   <Slider {...settings}>
                     <div className='imageContainer'>
-                      <img src={`https://prothemer-s-backend-1.onrender.com/images/${findData?.screenshorts[0]}`} className='sliderImg' alt='img-1' />
+                      <img src={`http://localhost:3000/images/${findData?.screenshorts[0]}`} className='sliderImg' alt='img-1' />
                     </div>
                     <div className='imageContainer'>
-                      <img src={`https://prothemer-s-backend-1.onrender.com/images/${findData?.screenshorts[1]}`} className='sliderImg' alt='img-2' />
+                      <img src={`http://localhost:3000/images/${findData?.screenshorts[1]}`} className='sliderImg' alt='img-2' />
                     </div>
                     <div className='imageContainer'>
-                      <img src={`https://prothemer-s-backend-1.onrender.com/images/${findData?.screenshorts[2]}`} className='sliderImg' alt='img-3' />
+                      <img src={`http://localhost:3000/images/${findData?.screenshorts[2]}`} className='sliderImg' alt='img-3' />
                     </div>
                   </Slider>
                 </Box>
@@ -361,7 +380,7 @@ const Dashboard = () => {
                 />
               </Grid>
               <Grid item xs={12} sx={{ textAlign: 'center', marginBottom: isSm ? '0px' : '16px' }}>
-                <a href={'https://prothemer-s-backend-1.onrender.com/images/' + findData?.projectZip}
+                <a href={'http://localhost:3000/images/' + findData?.projectZip}
                   download>
                   <Button variant="contained" endIcon={<BsDownload size={16} style={{ marginRight: '4px' }} />} sx={{ textTransform: 'capitalize' }} >
                     download .zip

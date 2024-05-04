@@ -46,7 +46,7 @@ const UserMainPage = () => {
 
     let Token = localStorage.getItem('loginToken');
 
-    axios.get('https://prothemer-s-backend-1.onrender.com/users/read', { headers: { Authorization: Token } })
+    axios.get('http://localhost:3000/users/read', { headers: { Authorization: Token } })
       .then((res) => {
         // console.log(res);
         setUserData(res.data.data);
@@ -207,14 +207,14 @@ const UserMainPage = () => {
         >
           <Tooltip title="Profile Settings">
             <Stack direction="row">
-              <Avatar alt={userData?.fname.toUpperCase()} className='bg-secondary' sx={{ width: 34, height: 34 }} src={`https://prothemer-s-backend-1.onrender.com/images/${userData?.profilepic}`}></Avatar>
+              <Avatar alt={userData?.fname.toUpperCase()} className='bg-secondary' sx={{ width: 34, height: 34 }} src={`http://localhost:3000/images/${userData?.profilepic}`}></Avatar>
               <Button
                 size='small'
                 variant="contained"
                 disableElevation
                 endIcon={<KeyboardArrowDownIcon />}
                 disableRipple
-                sx={{ textTransform: 'capitalize', fontSize: "15px", paddingRight: "0px" }}
+                sx={{ textTransform: 'capitalize', fontSize: "15px", paddingRight: "0px",backgroundColor : '#ffffff!important' }}
                 className='profileBTN'
               >
                 {userData?.fname.charAt(0) + '. ' + userData?.lname}
@@ -281,7 +281,7 @@ const UserMainPage = () => {
               >
                 <Tooltip title="Profile Settings">
                   <Stack direction="row">
-                    <Avatar alt={userData?.fname.toUpperCase()} className='bg-secondary' sx={{ width: 34, height: 34 }} src={`https://prothemer-s-backend-1.onrender.com/images/${userData?.profilepic}`}></Avatar>
+                    <Avatar alt={userData?.fname.toUpperCase()} className='bg-secondary' sx={{ width: 34, height: 34 }} src={`http://localhost:3000/images/${userData?.profilepic}`}></Avatar>
                     <Button
                       size='small'
                       variant="contained"

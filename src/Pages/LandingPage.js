@@ -43,7 +43,7 @@ const LandingPage = () => {
   const getCategoryData = () => {
 
 
-    axios.get('https://prothemer-s-backend-1.onrender.com/admin/category/read')
+    axios.get('http://localhost:3000/admin/category/read')
       .then((res) => {
         // console.log(res);
         setCategoryData(res.data.data);
@@ -124,7 +124,7 @@ const LandingPage = () => {
                           sx={{ position: 'absolute', top: '-44px', width: '80%', borderRadius: '7px' }}
                           component="img"
                           height="180"
-                          image={`https://prothemer-s-backend-1.onrender.com/images/${categoryData.image}`}
+                          image={`http://localhost:3000/images/${categoryData.image}`}
                           alt={categoryData.image}
                         />
                         <CardContent sx={{ marginTop: '113px' }}>

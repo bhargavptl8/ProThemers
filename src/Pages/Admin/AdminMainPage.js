@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { styled, useTheme, Box, Drawer, CssBaseline, Toolbar, List, Typography, Divider, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Button, Stack, useMediaQuery, Hidden } from '@mui/material';
-import MuiAppBar from '@mui/material/AppBar';
+import AppBar from '@mui/material/AppBar';
 
 //mui icons
 import MenuIcon from '@mui/icons-material/Menu';
@@ -37,7 +37,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const drawerWidth = 270;
+const drawerWidth = 230;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -58,22 +58,22 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   }),
 );
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  transition: theme.transitions.create(['margin', 'width'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
+// const AppBar = styled(MuiAppBar, {
+//   shouldForwardProp: (prop) => prop !== 'open',
+// })(({ theme, open }) => ({
+//   transition: theme.transitions.create(['margin', 'width'], {
+//     easing: theme.transitions.easing.sharp,
+//     duration: theme.transitions.duration.leavingScreen,
+//   }),
+//   ...(open && {
+//     width: `calc(100% - ${drawerWidth}px)`,
+//     marginLeft: `${drawerWidth}px`,
+//     transition: theme.transitions.create(['margin', 'width'], {
+//       easing: theme.transitions.easing.easeOut,
+//       duration: theme.transitions.duration.enteringScreen,
+//     }),
+//   }),
+// }));
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -147,7 +147,7 @@ const Mainbody = () => {
               <Typography
                 noWrap
                 component="a"
-                href="#app-bar-with-responsive-menu"
+                onClick={() => history.push('/')}
                 className='secondary-color'
                 sx={{
                   marginLeft: '5px!important',
@@ -156,6 +156,7 @@ const Mainbody = () => {
                   fontWeight: 600,
                   fontSize: "24px",
                   textDecoration: 'none',
+                  cursor: 'pointer'
                 }}
               >
                 Themer<span className='primary-color'>'</span>s
@@ -200,7 +201,7 @@ const Mainbody = () => {
             flexShrink: 0,
             '& .MuiDrawer-paper': {
               width: drawerWidth,
-              boxSizing: 'border-box',
+              // boxSizing: 'border-box',
             },
           }}
           variant={isLG ? "persistent" : "temporary"}
@@ -218,7 +219,7 @@ const Mainbody = () => {
                   variant="h6"
                   noWrap
                   component="a"
-                  href="#app-bar-with-responsive-menu"
+                  onClick={() => history.push('/')}
                   className='secondary-color'
                   sx={{
                     mr: 2,
@@ -228,6 +229,7 @@ const Mainbody = () => {
                     color: "#012970",
                     fontWeight: 600,
                     textDecoration: 'none',
+                    cursor: 'pointer'
                   }}
                 >
                   Themer<span className='primary-color'>'</span>s

@@ -79,7 +79,7 @@ const UserProfile = ({ Update }) => {
 
     let Token = localStorage.getItem('loginToken');
 
-    axios.get('https://prothemer-s-backend-1.onrender.com/users/read', { headers: { Authorization: Token } })
+    axios.get('http://localhost:3000/users/read', { headers: { Authorization: Token } })
       .then((res) => {
         // console.log(res);
         setUserData(res.data.data);
@@ -200,7 +200,7 @@ const UserProfile = ({ Update }) => {
 
       let Token = localStorage.getItem('loginToken');
 
-      axios.patch('https://prothemer-s-backend-1.onrender.com/users/update', formData, {
+      axios.patch('http://localhost:3000/users/update', formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: Token
@@ -246,7 +246,7 @@ const UserProfile = ({ Update }) => {
 
       let Token = localStorage.getItem('loginToken');
 
-      axios.patch('https://prothemer-s-backend-1.onrender.com/users/profile/change-pass', { currentpass: values.currentPassword, pass: values.newPassword, confirmpass: values.re_enterNewPassword }, { headers: { Authorization: Token } })
+      axios.patch('http://localhost:3000/users/profile/change-pass', { currentpass: values.currentPassword, pass: values.newPassword, confirmpass: values.re_enterNewPassword }, { headers: { Authorization: Token } })
         .then((res) => {
           console.log(res);
           setSubmitting(values.currentPassword = '', values.newPassword = '', values.re_enterNewPassword = '');
@@ -305,7 +305,7 @@ const UserProfile = ({ Update }) => {
           <Grid item md={4} xs={12}>
             <Item >
               <Stack alignItems="center" padding="5px" spacing={1.5}>
-                <img src={`https://prothemer-s-backend-1.onrender.com/images/${userData?.profilepic}`} alt={userData?.fname + '-img'} width={120} height={120} style={{ borderRadius: "50%" }} />
+                <img src={`http://localhost:3000/images/${userData?.profilepic}`} alt={userData?.fname + '-img'} width={120} height={120} style={{ borderRadius: "50%" }} />
                 <Box>
                   <Typography variant="h5" fontWeight={700} className='nunito-sans' color="#2c384e" marginBottom='2px'>
                     {userData?.fname.charAt(0).toUpperCase() + userData?.fname.substring(1) + ' ' + userData?.lname}

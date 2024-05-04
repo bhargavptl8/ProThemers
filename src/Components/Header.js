@@ -118,7 +118,7 @@ const Header = ({ loadData }) => {
 
   const getCategoryData = () => {
 
-    axios.get('https://prothemer-s-backend-1.onrender.com/admin/category/read')
+    axios.get('http://localhost:3000/admin/category/read')
       .then((res) => {
         // console.log(res);
         setCategoryData(res.data.data);
@@ -134,7 +134,7 @@ const Header = ({ loadData }) => {
 
     let Token = localStorage.getItem('loginToken');
 
-    axios.get('https://prothemer-s-backend-1.onrender.com/users/read', { headers: { Authorization: Token } })
+    axios.get('http://localhost:3000/users/read', { headers: { Authorization: Token } })
       .then((res) => {
         // console.log(res);
         setUserData(res.data.data);
@@ -161,7 +161,7 @@ const Header = ({ loadData }) => {
   const getOTP = (email) => {
 
 
-    axios.post('https://prothemer-s-backend-1.onrender.com/users/login/check', { email: email })
+    axios.post('http://localhost:3000/users/login/check', { email: email })
       .then((res) => {
         // console.log(res);
         setOTP(res.data.data);
@@ -214,7 +214,7 @@ const Header = ({ loadData }) => {
 
       let token = localStorage.getItem('token');
 
-      axios.post('https://prothemer-s-backend-1.onrender.com/users/login', { email: values.email, pass: values.password }, { headers: { Authorization: token } })
+      axios.post('http://localhost:3000/users/login', { email: values.email, pass: values.password }, { headers: { Authorization: token } })
         .then((res) => {
           console.log(res);
           localStorage.setItem('loginToken', res.data.token)
@@ -285,7 +285,7 @@ const Header = ({ loadData }) => {
       formData.append("profilepic", values.userImg);
 
 
-      axios.post('https://prothemer-s-backend-1.onrender.com/users/signup', formData, {
+      axios.post('http://localhost:3000/users/signup', formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         }
@@ -341,7 +341,7 @@ const Header = ({ loadData }) => {
 
       if (values.forgetpasswordPassword === values.forgetpasswordConfirmPassword) {
 
-        axios.patch('https://prothemer-s-backend-1.onrender.com/users/login/forget-pass', { email: values.forgetPasswordEmail, pass: values.forgetpasswordPassword, confirmpass: values.forgetpasswordConfirmPassword })
+        axios.patch('http://localhost:3000/users/login/forget-pass', { email: values.forgetPasswordEmail, pass: values.forgetpasswordPassword, confirmpass: values.forgetpasswordConfirmPassword })
           .then((res) => {
             console.log(res);
             setSubmitting(values.forgetPasswordEmail = '', values.forgetpasswordPassword = '', values.forgetpasswordConfirmPassword = '');
@@ -498,7 +498,7 @@ const Header = ({ loadData }) => {
       // console.log('values',values)
 
 
-      axios.patch('https://prothemer-s-backend-1.onrender.com/users/login/verify', { email: values.verifyEmail })
+      axios.patch('http://localhost:3000/users/login/verify', { email: values.verifyEmail })
         .then((res) => {
           console.log(res);
           getOTP(values.verifyEmail);
@@ -1068,16 +1068,19 @@ const Header = ({ loadData }) => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem onClick={() => { handleLoginModalOpen(); handleMobileMenuClose() }} sx={{ minHeight: 'auto' }}>
-        Login
-      </MenuItem>
-      <Divider sx={{ margin: '0px!important' }} />
-      <MenuItem onClick={() => { handleRegisterModalOpen(); handleMobileMenuClose() }} sx={{ minHeight: 'auto' }} >
-        Sign-up
-      </MenuItem>
+      { !LoginToken ? (
+        <>
+         <MenuItem onClick={() => { handleLoginModalOpen(); handleMobileMenuClose() }} sx={{ minHeight: 'auto' }}>
+         Login
+       </MenuItem>
+       <Divider sx={{ margin: '0px!important' }} />
+       <MenuItem onClick={() => { handleRegisterModalOpen(); handleMobileMenuClose() }} sx={{ minHeight: 'auto' }} >
+         Sign-up
+       </MenuItem>
+        </>
+      ) : '' }
       {LoginToken ? (
         <>
-          <Divider sx={{ margin: '0px!important' }} />
           <MenuItem disableRipple  >
             <IconButton
               size="large"
@@ -1092,14 +1095,14 @@ const Header = ({ loadData }) => {
             >
               <Tooltip title="Profile Settings">
                 <Stack direction="row">
-                  <Avatar alt={userData?.fname.toUpperCase()} className='bg-secondary' sx={{ width: 34, height: 34 }} src={`https://prothemer-s-backend-1.onrender.com/images/${userData?.profilepic}`} ></Avatar>
+                  <Avatar alt={userData?.fname.toUpperCase()} className='bg-secondary' sx={{ width: 34, height: 34 }} src={`http://localhost:3000/images/${userData?.profilepic}`} ></Avatar>
                   <Button
                     size='small'
                     variant="contained"
                     disableElevation
                     endIcon={<KeyboardArrowDownIcon />}
                     disableRipple
-                    sx={{ textTransform: 'capitalize', fontSize: "15px", paddingRight: "0px" }}
+                    sx={{ textTransform: 'capitalize', fontSize: "15px", paddingRight: "0px",backgroundColor : '#ffffff!important' }}
                     className='profileBTN'
                   >
                     {userData?.fname.charAt(0) + '.' + userData?.lname}
@@ -1170,7 +1173,7 @@ const Header = ({ loadData }) => {
                         >
                           <Stack direction="row">
                             {/* <Avatar className='bg-secondary' sx={{ width: 35, height: 35 }} >{userData?.fname.charAt(0).toUpperCase()}</Avatar> */}
-                            <Avatar alt={userData?.fname.toUpperCase()} sx={{ width: 34, height: 34 }} className='bg-secondary' src={`https://prothemer-s-backend-1.onrender.com/images/${userData?.profilepic}`} ></Avatar>
+                            <Avatar alt={userData?.fname.toUpperCase()} sx={{ width: 34, height: 34 }} className='bg-secondary' src={`http://localhost:3000/images/${userData?.profilepic}`} ></Avatar>
                             <Button
                               size='small'
                               variant="contained"
